@@ -14,19 +14,28 @@
 					<h3 class="box-title">USERS </h3>
 					<div class="text-right">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#add_user_modal">
-							Add New User
+							<li class="fa fa-user-plus"> Add User
+							</li>
 						</button>
 					</div>
 				</div>
 				<div class="box-body"></div>
-				<table class="table table-hover">
+				<table class="table table-bordered">
 					<tr>
-						<th>user_name</th>
+						<th>User Name</th>
 						<th>Email</th>
 						<th>Create Date</th>
 						<th>Status</th>
 
 					</tr>
+					<?php foreach ($users as $user) { ?>
+						<tr>
+							<td><?php echo $user->first_name; ?></td>
+							<td><?php echo $user->email; ?></td>
+							<td><?php echo $user->create_date; ?></td>
+							<td><?php echo $user->status; ?></td>
+						</tr>
+					<?php } ?>
 				</table>
 				<div class="box-footer"></div>
 			</div>

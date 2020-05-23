@@ -75,7 +75,7 @@
 			<ul class="sidebar-menu">
 				<li>
 					<a href="<?php echo base_url();?>dashboard">
-						<i class="fa fa-tachometer"></i> &nbsp;&nbsp;<span>Dashboard</span>
+						<i class="fa fa-desktop"></i> &nbsp;&nbsp;<span>Dashboard</span>
 						<span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -84,7 +84,23 @@
 				<li>
 					<a href="<?php echo base_url();?>users/users">
 						<!--base URL-path-function   index=empty-->
-						<i class="fa fa-users"></i> &nbsp;&nbsp;<span>Users</span>
+						<i class="fa fa-user"></i> &nbsp;&nbsp;<span>Users</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url();?>doctors/doctors">
+						<i class="fa fa-user-md"></i> &nbsp;&nbsp;<span>Doctors</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url();?>patients/patients">
+						<i class="fa fa-heartbeat"></i> &nbsp;&nbsp;<span>Patients</span>
 						<span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -92,7 +108,31 @@
 				</li>
 				<li>
 					<a href="">
-						<i class="fa fa-clock"></i> &nbsp;&nbsp;<span>Channeling</span>
+						<i class="fa fa-group"></i> &nbsp;&nbsp;<span>Staff</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="fa fa-calendar-check-o "></i> &nbsp;&nbsp;<span>Channeling</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="fa fa-money"></i> &nbsp;&nbsp;<span>Payments</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<i class="fa fa-line-chart"></i> &nbsp;&nbsp;<span>Reports</span>
 						<span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                         </span>

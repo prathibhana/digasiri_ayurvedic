@@ -21,9 +21,9 @@ class Doctors extends CI_Controller
 	}
 	public function add_doctor(){
 		$new_doctor=array(
-			'doc_name'=>$this->input->post('doc_name'),
+			'name'=>$this->input->post('name'),
 			'gender'=>$this->input->post('gender'),
-			'doc_spec'=>$this->input->post('doc_spec'),
+			'speciality'=>$this->input->post('speciality'),
 			'create_date'=>date('Y-m-d')
 		);
 		$result = $this->DoctorsModel->create($new_doctor);

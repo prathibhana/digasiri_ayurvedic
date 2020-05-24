@@ -14,12 +14,11 @@
 					<h3 class="box-title">DOCTORS </h3>
 					<div class="text-right">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#add_doctor_modal">
-							<li class="fa fa-user-plus"> Add Doctor
-							</li>
+							<i class="fa fa-user-plus"></i> Add Doctor
 						</button>
 					</div>
 				</div>
-				<div class="box-body"></div>
+				<div class="box-body">
 				<table class="table table-bordered">
 					<tr>
 						<th>Name</th>
@@ -30,14 +29,15 @@
 					</tr>
 					<?php foreach ($doctors as $doctor) { ?>
 						<tr>
-							<td><?php echo $doctor->doc_name; ?></td>
+							<td><?php echo $doctor->name; ?></td>
 							<td><?php echo $doctor->gender; ?></td>
-							<td><?php echo $doctor->doc_spec; ?></td>
-							<td><?php echo $doctor->doc_sch_id; ?></td>
+							<td><?php echo $doctor->speciality; ?></td>
+							<td><?php echo $doctor->schedule_id; ?></td>
 							<td><?php echo $doctor->create_date; ?></td>
 						</tr>
 					<?php } ?>
 				</table>
+				</div>
 				<div class="box-footer"></div>
 			</div>
 		</div>
@@ -60,24 +60,30 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Name</label>
-								<input type="text" class="form-control" name="doc_name" id="doc_name"
+								<input type="text" class="form-control" name="name" id="name"
 									   placeholder="Name" data-validation="required">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Gender</label>
-								<input type="text" class="form-control" name="gender" id="gender"
+								<select class="form-control" name="gender" id="gender"
 									   placeholder="Gender" data-validation="required">
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+								</select>
 							</div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Speciality</label>
-								<input type="text" class="form-control" name="doc_spec" id="doc_spec"
+								<select class="form-control" name="speciality" id="speciality"
 									   placeholder="Select Speciality" data-validation="required">
+									<option value="spec 1">spec1</option>
+									<option value="spec 2">spec2</option>
+								</select>
 							</div>
 						</div>
 					</div>

@@ -14,12 +14,11 @@
 					<h3 class="box-title">USERS </h3>
 					<div class="text-right">
 						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#add_user_modal">
-							<li class="fa fa-user-plus"> Add User
-							</li>
+							<i class="fa fa-user-plus"></i> Add User
 						</button>
 					</div>
 				</div>
-				<div class="box-body"></div>
+				<div class="box-body">
 				<table class="table table-bordered">
 					<tr>
 						<th>User Name</th>
@@ -37,6 +36,7 @@
 						</tr>
 					<?php } ?>
 				</table>
+				</div>
 				<div class="box-footer"></div>
 			</div>
 		</div>

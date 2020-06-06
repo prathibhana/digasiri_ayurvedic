@@ -28,6 +28,7 @@ class Patients extends CI_Controller
 	}
 	public function add_patient(){
 		$new_patient=array(
+			'salutation'=>$this->input->post('salutation'),
 			'first_name'=>$this->input->post('first_name'),
 			'last_name'=>$this->input->post('last_name'),
 			'gender'=>$this->input->post('gender'),
@@ -55,4 +56,14 @@ class Patients extends CI_Controller
 		echo json_encode($result);
 	}
 
+//	public function get_province(){
+//		$district=$this->input->post('district');
+//		$result=$this->DistrictsModel->select_province($district);
+//		echo json_encode($result);
+//	}
+	public function get_province(){
+		$district=$this->input->post('district');
+		$result=$this->DistrictsModel->select_province($district);
+		echo json_encode($result);
+	}
 }

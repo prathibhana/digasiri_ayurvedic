@@ -38,7 +38,7 @@
 						</tr>
 						<?php foreach ($patients as $patient) { ?>
 							<tr>
-								<td><?php echo $patient->first_name; ?></td>
+								<td><?php echo $patient->salutation; ?>&nbsp;<?php echo $patient->first_name; ?></td>
 								<td><?php echo $patient->last_name; ?></td>
 								<td><?php echo $patient->gender; ?></td>
 								<td><?php echo $patient->date_of_birth; ?></td>
@@ -74,14 +74,27 @@
 			<form action="<?php base_url(); ?>patients/add_patient" method="post">
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Salutation</label>
+								<select class="form-control" name="salutation" id="salutation"
+										placeholder="Salutation" data-validation="required">
+									<option disabled selected>Salutation</option>
+									<option value="Rev.">Rev.</option>
+									<option value="Mr.">Mr.</option>
+									<option value="Mrs.">Mrs.</option>
+									<option value="Mss.">Mss.</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-5">
 							<div class="form-group">
 								<label>First Name</label>
 								<input type="text" class="form-control" name="first_name" id="first_name"
 									   placeholder="First Name" data-validation="required">
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-5">
 							<div class="form-group">
 								<label>Last Name</label>
 								<input type="text" class="form-control" name="last_name" id="last_name"
@@ -113,7 +126,7 @@
 								<label>NIC NO</label>
 								<input type="text" class="form-control" name="nic" id="nic"
 									   placeholder="NIC Number" pattern="[0-9]{9}[x|X|v|V]|[0-9]{11}[x|X|v|V]"
-									   title="Contain 10 or 12 character" required>
+									   title="Contain 10 or 12 character" data-validation="required">
 							</div>
 						</div>
 					</div>
@@ -170,14 +183,16 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Province</label>
-								<select class="form-control" name="province" id="province"
-										placeholder="Enter Province" data-validation="required">
-									<option disabled selected>Select Province</option>
-									<?php foreach ($provinces as $province){?>
-										<option value="<?php echo $province->name_en?>"><?php echo $province->name_en?></option>
-
-									<?php }?>
-								</select>
+								<input type='text' class="form-control" name="province"
+									   id="province" readonly>
+<!--								<select class="form-control" name="province" id="province"-->
+<!--										placeholder="Enter Province" data-validation="required">-->
+<!--									<option disabled selected>Select Province</option>-->
+<!--									--><?php //foreach ($provinces as $province){?>
+<!--										<option value="--><?php //echo $province->name_en?><!--">--><?php //echo $province->name_en?><!--</option>-->
+<!---->
+<!--									--><?php //}?>
+<!--								</select>-->
 							</div>
 						</div>
 					</div>
@@ -185,8 +200,9 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Telephone NO</label>
-								<input type="text" class="form-control" name="telephone_no" id="telephone_no"
-									   placeholder="Telephone Number" data-validation="required">
+								<input type="tel" class="form-control" name="telephone_no" id="telephone_no"
+									   placeholder="Telephone Number" pattern="^\+?\d{0,13}"
+									   title="Phone Number" required>
 							</div>
 						</div>
 					</div>
@@ -218,3 +234,23 @@
 	});
 
 	});</script>
+<script>
+	$(document).ready(function () {
+		$('#district').change(function () {
+			let district=$(this).val();
+			$.ajax({
+				type:'post',
+				url:base_url + 'patients/patients/get_province',
+				async: false,
+				dataType: 'json',
+				data:{'district':district},
+				success:function (response) {
+					$('#province').val(response[0]['name_en']);
+
+				},
+			});
+
+		});
+
+	});
+</script>

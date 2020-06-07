@@ -21,4 +21,13 @@ class PatientsModel extends CI_Model
 			return false;
 		}
 	}
+	public function update($patient)
+	{
+		$this->db->update('patients', $patient);
+		if ($this->db->affected_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

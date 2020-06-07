@@ -1,3 +1,23 @@
+<?php if($this->session->flashdata('alert')) { ?>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.notify({
+						message: '<?php echo $this->session->flashdata('alert')['massage']?>'
+					},
+					{
+						type: '<?php echo $this->session->flashdata('alert')['type']?>',
+						placement: {
+							from: "bottom",
+							align: "right"
+						},
+						animate: {
+							enter: 'animated fadeInDown',
+							exit: 'animated fadeOutUp'
+						},
+					});
+		});
+	</script>
+<?php } ?>
 <!-- Main content -->
 <section class="content">
 	<div class="row">
@@ -20,21 +40,18 @@
 					</div>
 				</div>
 				<div class="box-body">
-					<table class="table table-bordered">
+					<table class="table table-bordered table-responsive">
 						<tr>
 							<th>First Name</th>
 							<th>Last Name</th>
 							<th>Gender</th>
 							<th>Date of Birth</th>
 							<th>Age</th>
-							<th>NIC NO</th>
-							<th>Telephone NO</th>
-							<th>Street</th>
-							<th>Street Two</th>
-							<th>City</th>
-							<th>District</th>
-							<th>Province</th>
+							<th>NIC Number</th>
+							<th>Telephone Number</th>
+							<th>Address</th>
 							<th>Create Date</th>
+							<th></th>
 						</tr>
 						<?php foreach ($patients as $patient) { ?>
 							<tr>
@@ -45,12 +62,16 @@
 								<td><?php echo "age"; ?></td>
 								<td><?php echo $patient->nic; ?></td>
 								<td><?php echo $patient->telephone_no; ?></td>
-								<td><?php echo $patient->street; ?></td>
-								<td><?php echo $patient->street_two; ?></td>
-								<td><?php echo $patient->city; ?></td>
-								<td><?php echo $patient->district; ?></td>
-								<td><?php echo $patient->province; ?></td>
+								<td><?php echo $patient->street.', '.$patient->street_two.',<br>
+									'.$patient->city.', '.$patient->district.',<br>'.$patient->province; ?></td>
+
 								<td><?php echo $patient->create_date; ?></td>
+								<td class="text-center">
+								<button type="button" class="btn btn-success btn-sm"
+								name="patient_update" id="patient_update" data-id="<?php echo $patient->id;?>"
+									>Update</button>
+								<button type="button" class="btn btn-danger btn-sm"
+								>Delete</button></td>
 							</tr>
 						<?php } ?>
 					</table>
@@ -91,14 +112,16 @@
 							<div class="form-group">
 								<label>First Name</label>
 								<input type="text" class="form-control" name="first_name" id="first_name"
-									   placeholder="First Name" data-validation="required">
+									   placeholder="First Name" data-validation="custom"
+									   data-validation-regexp="^([A-Za-z]+)$">
 							</div>
 						</div>
 						<div class="col-md-5">
 							<div class="form-group">
 								<label>Last Name</label>
 								<input type="text" class="form-control" name="last_name" id="last_name"
-									   placeholder="Last Name" data-validation="required">
+									   placeholder="Last Name" data-validation="custom"
+									   data-validation-regexp="^([A-Za-z]+)$">
 							</div>
 						</div>
 					</div>
@@ -118,7 +141,7 @@
 							<div class="form-group">
 								<label>Date of Birth</label>
 								<input type="date" class="form-control" name="date_of_birth" id="date_of_birth"
-									   placeholder="dob" data-validation="required">
+									   placeholder="dob" data-validation="date">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -126,7 +149,7 @@
 								<label>NIC NO</label>
 								<input type="text" class="form-control" name="nic" id="nic"
 									   placeholder="NIC Number" pattern="[0-9]{9}[x|X|v|V]|[0-9]{11}[x|X|v|V]"
-									   title="Contain 10 or 12 character" data-validation="required">
+									   title="Contain 10 or 12 character" data-validation="alphanumeric">
 							</div>
 						</div>
 					</div>
@@ -135,14 +158,14 @@
 							<div class="form-group">
 								<label>Street</label>
 								<input type="text" class="form-control" name="street" id="street"
-									   placeholder="Enter Street" data-validation="required">
+									   placeholder="Enter Street" data-validation="alphanumeric" data-validation-allowing=".,/-_">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>Street two</label>
 								<input type="text" class="form-control" name="street_two" id="street_two"
-									   placeholder="Enter Street Two" data-validation="required">
+									   placeholder="Enter Street Two" data-validation="alphanumeric" data-validation-allowing=".,/-_">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -217,6 +240,164 @@
 		</div>
 	</div>
 </div>
+<!--update user modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="update_patient_modal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<div class="modal-title"><h4>Update Patient</h4></div>
+
+			</div>
+			<form action="<?php base_url(); ?>patients/update_patient" method="post">
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="form-group">
+								<label>Salutation</label>
+								<select class="form-control" name="salutation_update" id="salutation_update"
+										placeholder="Salutation" data-validation="required">
+									<option disabled selected>Salutation</option>
+									<option value="Rev.">Rev.</option>
+									<option value="Mr.">Mr.</option>
+									<option value="Mrs.">Mrs.</option>
+									<option value="Mss.">Mss.</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-group">
+								<label>First Name</label>
+								<input type="text" class="form-control" name="first_name_update" id="first_name_update"
+									   placeholder="First Name" data-validation="custom"
+									   data-validation-regexp="^([A-Za-z]+)$">
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-group">
+								<label>Last Name</label>
+								<input type="text" class="form-control" name="last_name_update" id="last_name_update"
+									   placeholder="Last Name" data-validation="custom"
+									   data-validation-regexp="^([A-Za-z]+)$">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Gender</label>
+								<select class="form-control" name="gender_update" id="gender_update"
+										placeholder="Gender" data-validation="required">
+									<option disabled selected>Select Gender</option>
+									<option value="Male">Male</option>
+									<option value="Female">Female</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Date of Birth</label>
+								<input type="date" class="form-control" name="date_of_birth_update"
+									   id="date_of_birth_update" placeholder="dob" data-validation="date">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>NIC NO</label>
+								<input type="text" class="form-control" name="nic_update" id="nic_update"
+									   placeholder="NIC Number" pattern="[0-9]{9}[x|X|v|V]|[0-9]{11}[x|X|v|V]"
+									   title="Contain 10 or 12 character" data-validation="alphanumeric">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Street</label>
+								<input type="text" class="form-control" name="street_update" id="street_update"
+									   placeholder="Enter Street" data-validation="alphanumeric" data-validation-allowing=".,/-_">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Street two</label>
+								<input type="text" class="form-control" name="street_two_update" id="street_two_update"
+									   placeholder="Enter Street Two" data-validation="alphanumeric" data-validation-allowing=".,/-_">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>City</label>
+								<select class="form-control" name="city_update" id="city_update"
+										placeholder="Enter City" data-validation="required">
+									<option disabled selected>Select City</option>
+									<?php foreach ($cities as $city){?>
+										<option value="<?php echo $city->name_en?>"><?php echo $city->name_en?></option>
+
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Postal Code</label>
+								<input type='text' class="form-control" name="postal_code_update"
+									   id="postal_code_update" readonly>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>District</label>
+								<select class="form-control" name="district_update" id="district_update"
+										placeholder="Enter District" data-validation="required">
+									<option disabled selected>Select District</option>
+									<?php foreach ($districts as $district){?>
+										<option value="<?php echo $district->name_en?>"><?php echo $district->name_en?></option>
+
+									<?php }?>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Province</label>
+								<input type='text' class="form-control" name="province_update"
+									   id="province_update" readonly>
+								<!--								<select class="form-control" name="province" id="province"-->
+								<!--										placeholder="Enter Province" data-validation="required">-->
+								<!--									<option disabled selected>Select Province</option>-->
+								<!--									--><?php //foreach ($provinces as $province){?>
+								<!--										<option value="--><?php //echo $province->name_en?><!--">--><?php //echo $province->name_en?><!--</option>-->
+								<!---->
+								<!--									--><?php //}?>
+								<!--								</select>-->
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Telephone NO</label>
+								<input type="tel" class="form-control" name="telephone_no_update"
+									   id="telephone_no_update"
+									   placeholder="Telephone Number" pattern="^\+?\d{0,13}"
+									   title="Phone Number" required>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="text-right">
+						<button type="reset" class="btn btn-success" data-toggle="modal" data-target="">Reset</button>
+						<button type="submit" class="btn bg-aqua" data-toggle="modal" data-target="">Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <script>$(document).ready(function () {
 	$('#city').change(function () {
 		let city=$(this).val();	//getting data
@@ -250,6 +431,9 @@
 				},
 			});
 
+		});
+		$('#patient_update').click(function(){
+			$('#update_patient_modal').modal('show');
 		});
 
 	});

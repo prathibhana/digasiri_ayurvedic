@@ -46,8 +46,15 @@ class Patients extends CI_Controller
 		$result = $this->PatientsModel->create($new_patient);
 
 		if ($result ==true){
+			$alert =array(
+				'type'=> "success",
+				'massage'=>"Patient Added Successfully"
+			);
+			$this->session->set_flashdata('alert',$alert);
+
 			redirect('patients/patients');
 		}
+
 
 	}
 	public function get_postal_code(){
@@ -56,11 +63,6 @@ class Patients extends CI_Controller
 		echo json_encode($result);
 	}
 
-//	public function get_province(){
-//		$district=$this->input->post('district');
-//		$result=$this->DistrictsModel->select_province($district);
-//		echo json_encode($result);
-//	}
 	public function get_province(){
 		$district=$this->input->post('district');
 		$result=$this->DistrictsModel->select_province($district);

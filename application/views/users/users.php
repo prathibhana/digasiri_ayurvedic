@@ -25,6 +25,7 @@
 						<th>Email</th>
 						<th>Create Date</th>
 						<th>Status</th>
+						<th></th>
 
 					</tr>
 					<?php foreach ($users as $user) { ?>
@@ -33,6 +34,11 @@
 							<td><?php echo $user->email; ?></td>
 							<td><?php echo $user->create_date; ?></td>
 							<td><?php echo $user->status; ?></td>
+							<td class="text-center"><button type="button" class="btn btn-success btn-sm"
+									>Update</button>
+							<button type="button" class="btn btn-danger btn-sm"
+								>Delete</button></td>
+
 						</tr>
 					<?php } ?>
 				</table>

@@ -23,11 +23,10 @@ class PatientsModel extends CI_Model
 	}
 	public function update($patient)
 	{
-		$this->db->update('patients', $patient);
-		if ($this->db->affected_rows() == 1) {
-			return true;
-		} else {
-			return false;
-		}
+	$this->db->from('patients');
+	$this->db->where('id',$patient);
+	$result=$this->db->get();
+	return $result->result();
+
 	}
 }

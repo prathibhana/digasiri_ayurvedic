@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="box-body">
-					<table class="table table-bordered table-responsive">
+					<table class="table table-bordered table-responsive" id="patient_table">
 						<tr>
 							<th>First Name</th>
 							<th>Last Name</th>
@@ -69,8 +69,9 @@
 								<td class="text-center">
 								<button type="button" class="btn btn-success btn-sm"
 								name="patient_update" id="patient_update" data-id="<?php echo $patient->id;?>"
-									>Update</button>
-								<button type="button" class="btn btn-danger btn-sm"
+								>Update</button>
+								<button type="button" class="btn btn-danger btn-sm" name="patient_delete"
+								id="patient_delete" data-id="<?php echo $patient->id;?>"
 								>Delete</button></td>
 							</tr>
 						<?php } ?>
@@ -83,7 +84,7 @@
 
 </section>
 
-<!--add new user modal-->
+<!--add new patient modal-->
 <div class="modal fade" tabindex="-1" role="dialog" id="add_patient_modal">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -240,7 +241,7 @@
 		</div>
 	</div>
 </div>
-<!--update user modal-->
+<!--update patient modal-->
 <div class="modal fade" tabindex="-1" role="dialog" id="update_patient_modal">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
@@ -365,14 +366,6 @@
 								<label>Province</label>
 								<input type='text' class="form-control" name="province_update"
 									   id="province_update" readonly>
-								<!--								<select class="form-control" name="province" id="province"-->
-								<!--										placeholder="Enter Province" data-validation="required">-->
-								<!--									<option disabled selected>Select Province</option>-->
-								<!--									--><?php //foreach ($provinces as $province){?>
-								<!--										<option value="--><?php //echo $province->name_en?><!--">--><?php //echo $province->name_en?><!--</option>-->
-								<!---->
-								<!--									--><?php //}?>
-								<!--								</select>-->
 							</div>
 						</div>
 					</div>
@@ -395,6 +388,29 @@
 					</div>
 				</div>
 			</form>
+		</div>
+	</div>
+</div>
+<!--Delete patient modal-->
+<div class="modal fade " tabindex="-1" role="dialog" id="delete_patient_modal">
+	<div class="modal-dialog modal-sm" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<div class="modal-title"><h3>Delete Patient
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></h3>
+					</button>
+				</div>
+
+			</div>
+			<div class="modal-body">
+				Are you sure you want to delete this patient?
+			</div>
+			<div class="modal-footer text-right">
+			<button type="reset" class="btn btn-success" data-toggle="modal" data-target="">Yes</button>
+			<button type="submit" class="btn bg-aqua" data-toggle="modal" data-target="">No</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -432,8 +448,35 @@
 			});
 
 		});
-		$('#patient_update').click(function(){
+		$('#patient_table').on('click','#patient_update',function(){
+			let id=$(this).attr('data-id');
+			// alert(id);
 			$('#update_patient_modal').modal('show');
+			$.ajax({
+				type:'post',
+				url:base_url+'patients/patients/update_patient',
+				async:false,
+				dataType:'json',
+				data:{'id':id},
+				success:function (response) {
+					$('#salutation_update').val(response[0]['salutation']).change();
+					$('#first_name_update').val(response[0]['first_name']);
+					$('#last_name_update').val(response[0]['last_name']);
+					$('#gender_update').val(response[0]['gender']).change();
+					$('#date_of_birth_update').val(response[0]['date_of_birth']);
+					$('#nic_update').val(response[0]['nic']);
+					$('#street_update').val(response[0]['street']).change();
+					$('#street_two_update').val(response[0]['street_two']).change();
+					$('#city_update').val(response[0]['city']).change();
+					$('#postal_code_update').val(response[0]['postal_code']).change();
+					$('#district_update').val(response[0]['district']).change();
+					$('#province_update').val(response[0]['province']).change();
+					$('#telephone_no_update').val(response[0]['telephone_no']).change();
+				}
+			})
+		});
+		$('#patient_delete').click(function(){
+			$('#delete_patient_modal').modal('show');
 		});
 
 	});

@@ -68,41 +68,60 @@ class Patients extends CI_Controller
 		$result=$this->DistrictsModel->select_province($district);
 		echo json_encode($result);
 	}
-	public function update_patient(){
+	public function get_patient(){
 		$patient=$this->input->post('id');
-		$result=$this->PatientsModel->update($patient);
+		$result=$this->PatientsModel->get_patient($patient);
 		echo json_encode($result);
 	}
 
-//	public function update_patient(){
-//		$patient=array(
-//			'salutation'=>$this->input->post('salutation'),
-//			'first_name'=>$this->input->post('first_name'),
-//			'last_name'=>$this->input->post('last_name'),
-//			'gender'=>$this->input->post('gender'),
-//			'date_of_birth'=>$this->input->post('date_of_birth'),
-//			'nic'=>$this->input->post('nic'),
-//			'telephone_no'=>$this->input->post('telephone_no'),
-//			'street'=>$this->input->post('street'),
-//			'street_two'=>$this->input->post('street_two'),
-//			'city'=>$this->input->post('city'),
-//			'postal_code'=>$this->input->post('postal_code'),
-//			'district'=>$this->input->post('district'),
-//			'province'=>$this->input->post('province')
-////			'create_date'=>date('Y-m-d')
-//		);
-//		$result = $this->PatientsModel->update($patient);
-//
-//		if ($result ==true){
-//			$alert =array(
-//				'type'=> "success",
-//				'massage'=>"Patient Update Successfully"
-//			);
-//			$this->session->set_flashdata('alert',$alert);
-//
-//			redirect('patients/patients');
-//		}
-//
-//
-//	}
+	public function update_patient(){
+		$patient_id=$this->input->post('id');
+		$patient=array(
+			'salutation'=>$this->input->post('salutation'),
+			'first_name'=>$this->input->post('first_name'),
+			'last_name'=>$this->input->post('last_name'),
+			'gender'=>$this->input->post('gender'),
+			'date_of_birth'=>$this->input->post('date_of_birth'),
+			'nic'=>$this->input->post('nic'),
+			'telephone_no'=>$this->input->post('telephone_no'),
+			'street'=>$this->input->post('street'),
+			'street_two'=>$this->input->post('street_two'),
+			'city'=>$this->input->post('city'),
+			'postal_code'=>$this->input->post('postal_code'),
+			'district'=>$this->input->post('district'),
+			'province'=>$this->input->post('province')
+//			'create_date'=>date('Y-m-d')
+		);
+
+		$result = $this->PatientsModel->update($patient_id,$patient);
+
+		if ($result ==true){
+			$alert =array(
+				'type'=> "success",
+				'massage'=>"Patient Update Successfully"
+			);
+			$this->session->set_flashdata('alert',$alert);
+
+			redirect('patients/patients');
+		} else {
+			var_dump($result);
+		}
+
+
+	}
+	public function delete_patient(){
+		$id=$this->input->post('delete_id');
+		$result = $this->PatientsModel->delete_patient($id);
+		if ($result ==true){
+			$alert =array(
+				'type'=> "success",
+				'massage'=>"Patient Delete Successfully"
+			);
+			$this->session->set_flashdata('alert',$alert);
+
+			redirect('patients/patients');
+		} else {
+			var_dump($result);
+		}
+	}
 }

@@ -251,6 +251,7 @@
 
 			</div>
 			<form action="<?php base_url(); ?>patients/update_patient" method="post">
+				<input type="hidden" name="id" id="update_id"/>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-2">
@@ -408,7 +409,10 @@
 				Are you sure you want to delete this patient?
 			</div>
 			<div class="modal-footer text-right">
-			<button type="reset" class="btn btn-success" data-toggle="modal" data-target="">Yes</button>
+				<form action="<?php echo base_url(); ?>patients/Patients/delete_patient" method="post" style="display: inline">
+					<input type="hidden" name="delete" id="delete_id">
+					<button type="submit" class="btn btn-success" data-toggle="modal" data-target="">Yes</button>
+				</form>
 			<button type="submit" class="btn bg-aqua" data-toggle="modal" data-target="">No</button>
 			</div>
 		</div>
@@ -454,11 +458,12 @@
 			$('#update_patient_modal').modal('show');
 			$.ajax({
 				type:'post',
-				url:base_url+'patients/patients/update_patient',
+				url:base_url+'patients/patients/get_patient',
 				async:false,
 				dataType:'json',
 				data:{'id':id},
 				success:function (response) {
+					$('#update_id').val(response[0]['id']);
 					$('#salutation_update').val(response[0]['salutation']).change();
 					$('#first_name_update').val(response[0]['first_name']);
 					$('#last_name_update').val(response[0]['last_name']);
@@ -475,7 +480,9 @@
 				}
 			})
 		});
-		$('#patient_delete').click(function(){
+		$('#patient_table').on('click','#patient_delete',function(){
+			let id=$(this).attr('data-id');
+			$('#delete_id').val('id')
 			$('#delete_patient_modal').modal('show');
 		});
 

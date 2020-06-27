@@ -21,12 +21,35 @@ class PatientsModel extends CI_Model
 			return false;
 		}
 	}
-	public function update($patient)
+	public  function get_patient($patinet){
+		$this->db->from('patients');
+		$this->db->where('id',$patinet);
+		$query = $this->db->get();    //get all data and adding to variable
+		return $query->result();
+	}
+
+
+	public function update($patient_id,$patient)
 	{
-	$this->db->from('patients');
-	$this->db->where('id',$patient);
-	$result=$this->db->get();
-	return $result->result();
+		$this->db->where('id',$patient_id);
+		$this->db->update('patients',$patient);
+
+		if ($this->db->affected_rows() == 1) {
+			return true;
+		} else {
+			return $this->db->error();
+		}
 
 	}
+	public function delete_patient($id){
+		$this->db->where('id',$id);
+		$this->db->delete('patients');
+		if ($this->db->affected_rows() == 1) {
+			return true;
+		} else {
+			return $this->db->error();
+		}
+
+	}
+
 }

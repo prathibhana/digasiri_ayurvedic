@@ -20,17 +20,50 @@ class Users extends CI_Controller
 		$this->load->view('footer');
 	}
 	public function add_user(){
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < 10; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
 		$new_user=array(
 			'first_name'=>$this->input->post('first_name'),
 			'last_name'=>$this->input->post('last_name'),
 			'email'=>$this->input->post('email'),
+			'password' => sha1($randomString),
 			'create_date'=>date('Y-m-d')
 		);
+		$email_settings = array(
+			'protocol' 	=> 'smtp',
+			'smtp_host'	=> 'smtp.googlemail.com',
+			'smtp_port'	=> '587',
+			'smtp_user'	=> 'testyasipro@gmail.com',
+			'smtp_pass'	=> 'Yasiru@[1234]',
+			'mail_type'	=> 'html',
+			'smtp_crypto'=> 'tls',
+			'charset'	=> 'utf-8',
+			'new_line'	=>"\r\n"
+		);
+		$this->load->library('email',$email_settings); //load email library
+		$this->email->from('admin@digasiriayurvedic.com','Digasiri Ayurvedic');
+		$this->email->to($new_user['email']);
+		$this->email->set_mailtype('html');
+		$this->email->subject('Invitation');
+		$this->email->message('
+			<p>Hi Dear '.$new_user['first_name'].' '.$new_user['last_name'].',</p>
+			<p>Password '.$randomString.',</p>
+		');
+
 		$result = $this->UsersModel->create($new_user);
 
 		if ($result ==true){
+			$this->email->send();
 			redirect('users/users');
 		}
 
 	}
+
+
+
+
 }

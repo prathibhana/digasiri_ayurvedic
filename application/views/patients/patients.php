@@ -209,14 +209,6 @@
 								<label>Province</label>
 								<input type='text' class="form-control" name="province"
 									   id="province" readonly>
-<!--								<select class="form-control" name="province" id="province"-->
-<!--										placeholder="Enter Province" data-validation="required">-->
-<!--									<option disabled selected>Select Province</option>-->
-<!--									--><?php //foreach ($provinces as $province){?>
-<!--										<option value="--><?php //echo $province->name_en?><!--">--><?php //echo $province->name_en?><!--</option>-->
-<!---->
-<!--									--><?php //}?>
-<!--								</select>-->
 							</div>
 						</div>
 					</div>

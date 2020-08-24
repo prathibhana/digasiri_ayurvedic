@@ -51,7 +51,10 @@ class Users extends CI_Controller
 		$this->email->subject('Invitation');
 		$this->email->message('
 			<p>Hi Dear '.$new_user['first_name'].' '.$new_user['last_name'].',</p>
+			<p>Welcome to Digasiri Ayurvedic, Please find your password as below.</p>
 			<p>Password '.$randomString.',</p>
+			<p>Be with us always.</p>
+			<p>Thank You!</p>
 		');
 
 		$result = $this->UsersModel->create($new_user);
@@ -62,7 +65,15 @@ class Users extends CI_Controller
 		}
 
 	}
+	public function active_user(){
+		$id = $this->input->post('id');
+		$result = $this->UsersModel->active_user($id);
 
+	}
+	public function inactive_user(){
+		$id = $this->input->post('id');
+		$result = $this->UsersModel->inactive_user($id);
+	}
 
 
 

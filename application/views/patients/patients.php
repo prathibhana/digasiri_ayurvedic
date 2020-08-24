@@ -69,10 +69,15 @@
 								<td class="text-center">
 								<button type="button" class="btn btn-success btn-sm"
 								name="patient_update" id="patient_update" data-id="<?php echo $patient->id;?>"
-								>Update</button>
+								><i class="fa fa-pencil"></i></button>
 								<button type="button" class="btn btn-danger btn-sm" name="patient_delete"
 								id="patient_delete" data-id="<?php echo $patient->id;?>"
-								>Delete</button></td>
+								><i class="fa fa-pencil-square"></i></button>
+								<button type="=button" class="btn btn-success btn-sm" name="active" id="active"
+								><i class="fa fa-right"></i></button>
+								<button type="=button" class="btn btn-warning btn-sm" name="inactive" id="inactive"
+								><i class="fa fa-times"></i></button>
+								</td>
 							</tr>
 						<?php } ?>
 					</table>

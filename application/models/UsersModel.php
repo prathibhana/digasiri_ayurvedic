@@ -20,4 +20,14 @@ class UsersModel extends CI_Model
 			return false;
 		}
 	}
+	public function active_user($id){
+		$this->db->where('id',$id);
+		$this->db->update('users',array('status'=>1));
+		redirect('users/users');
+	}
+	public function inactive_user($id){
+		$this->db->where('id',$id);
+		$this->db->update('users',array('status'=>0));
+		redirect('users/users');
+	}
 }

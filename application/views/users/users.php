@@ -34,11 +34,31 @@
 							<td><?php echo $user->email; ?></td>
 							<td><?php echo $user->create_date; ?></td>
 							<td><?php echo $user->status; ?></td>
-							<td class="text-center"><button type="button" class="btn btn-success btn-sm"
-									>Update</button>
+							<td class="text-center">
+								<button type="button" class="btn btn-success btn-sm"
+									><i class="fa fa-pencil"></i> </button>
 							<button type="button" class="btn btn-danger btn-sm"
-								>Delete</button></td>
+							><i class="fa fa-pencil-square"></i></button>
+							<?php if($user->status==0){?>
+							<form action="<?php base_url();?>users/active_user" method="post"
+								  style="display: inline">
+							<input type="hidden" name="id" value="<?php echo $user->id;?>"/>
+							<button type="submit" class="btn btn-success btn-sm"
+									id="user_active"
+								><i class="fa fa-check"></i> </button>
+							<?php }?>
 
+							</form>
+							<form action="<?php base_url();?>users/inactive_user" method="post"
+								  style="display: inline">
+							<?php if($user->status==1){?>
+							<input type="hidden" name="id" value="<?php echo $user->id;?>"/>
+							<button type="submit" class="btn btn-danger btn-sm"
+									id="user_inactive"
+								><i class="fa fa-times"></i> </button>
+							<?php }?>
+							</form>
+							</td>
 						</tr>
 					<?php } ?>
 				</table>

@@ -30,4 +30,9 @@ class UsersModel extends CI_Model
 		$this->db->update('users',array('status'=>0));
 		redirect('users/users');
 	}
+	public function check_email($email){
+		$this->db->where('email',$email);
+		$query =$this->db->get('users');
+		return $query->result();
+	}
 }

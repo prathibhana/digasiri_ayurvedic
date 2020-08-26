@@ -19,7 +19,7 @@
 					</div>
 				</div>
 				<div class="box-body">
-				<table class="table table-bordered">
+				<table class="table table-bordered data_tables display pageResize">
 					<tr>
 						<th>User Name</th>
 						<th>Email</th>
@@ -103,6 +103,7 @@
 								<label>Email Address</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="Email"
 									   data-validation="email">
+								<p id="email_error" >email already exist!</p>
 							</div>
 						</div>
 					</div>
@@ -118,3 +119,26 @@
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function () {
+		$('#email_error').hide();
+		$('#email').change(function () {
+			var email = $(this).val();
+			$.ajax({
+				type: 'post',
+				url: base_url+'users/users/check_email',
+				async : false,
+				datatype : 'json',
+				data : {'email': email},
+				success: function (response) {
+					if (response){
+						$('#email_error').show();
+					}
+					else {
+						$('#email_error').hide();
+					}
+				}
+			})
+	});
+	})
+</script>

@@ -36,29 +36,31 @@ class Users extends CI_Controller
 			'password' => sha1($randomString),
 			'create_date' => date('Y-m-d')
 		);
-		$email_settings = array(
+		$mail_settings = Array(
 			'protocol' => 'smtp',
 			'smtp_host' => 'smtp.googlemail.com',
 			'smtp_port' => '587',
-			'smtp_user' => 'testyasipro@gmail.com',
-			'smtp_pass' => 'Yasiru@[1234]',
-			'mail_type' => 'html',
+			'smtp_user' => 'shlittab@gmail.com',
+			'smtp_pass' => 'Rukshan@4321',
+			'mailtype' => 'html',
 			'smtp_crypto' => 'tls',
 			'charset' => 'utf-8',
-			'new_line' => "\r\n"
+			'newline' => "\r\n"
 		);
-		$this->load->library('email', $email_settings); //load email library
-		$this->email->from('admin@digasiriayurvedic.com', 'Digasiri Ayurvedic');
+		$this->load->library('email', $mail_settings);
+		$this->email->from('DigasiriAyurvedic@bit.lk', 'Channeling System');
 		$this->email->to($new_user['email']);
-		$this->email->set_mailtype('html');
-		$this->email->subject('Invitation');
+		$this->email->set_mailtype("html");
+		$this->email->subject('Invitation for Ayurvedic Channeling System');
 		$this->email->message('
-			<p>Hi Dear ' . $new_user['first_name'] . ' ' . $new_user['last_name'] . ',</p>
-			<p>Welcome to Digasiri Ayurvedic, Please find your password as below.</p>
-			<p>Password ' . $randomString . ',</p>
-			<p>Be with us always.</p>
-			<p>Thank You!</p>
-		');
+   <p>Dear '.$new_user['first_name'].' '.$new_user['last_name'].'</p>
+   <p>Thank you for connecting with us, Please find your email and password as below.</p>
+   <p>Email: '.$new_user['email'].'</p>
+   <p>password: '.$randomString.'</p>
+   <p>Thank you!</p>
+   
+      ');
+		$this->email->send();
 
 		$result = $this->UsersModel->create($new_user);
 

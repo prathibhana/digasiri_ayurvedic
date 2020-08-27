@@ -12,17 +12,22 @@ class Login extends CI_Controller {
 	}
 
 	public function signup(){
+	//	check email or pw valid
+
+
 		$data =array(
 			'email' => $this->input->post('email'),
 			'password' => $this->input->post('password')
 		);
 		$query_result = $this->loginModel->select_user($data);
+
 		$this->session->set_userdata('name','Prathibhana Sachintha');
 		if ($query_result= true){
 			redirect('dashboard');
-		}else redirect('login/login');
+		}else { $this->session->set_flashdata('error',true);
+			redirect('login/login');
 
-
+		}
 	}
 	public function logout(){
 		redirect('login/login');

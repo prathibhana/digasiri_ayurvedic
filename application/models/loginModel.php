@@ -1,25 +1,28 @@
 <?php
 
-class loginModel extends CI_Model {
-	//SELECT * FROM users where email = $data['email'] && password = $data['password']
-	public function select_user($data){
-		$conditon = array(
-			'email' => $data['email'],
-			'password'=>$data['password']
-		);
-		//select * from usere where $condition
-		$query = $this->db->select("*")->from("users")->where($conditon);
+class loginModel extends CI_Model
+{
+//SELECT * FROM users where email = $data['email'] && password = $data['password']
+public function select_user($data)
+{
+$conditon = array(
+	'email' => $data['email'],
+	'password' => $data['password']
+);
+$this->db->where('email', $data['email']);
+$query = $this->db->get('users');
 
-		//output
-		$result = $query->get()->result_array();
-
-		// check weather if user available
-		if(count($result)==1){
-			return true;
-		}else {
-			return false;
-		}
+if ($query->result()) {
+	$this->db->where($conditon);
+	$user = $this->db->get('users');
+	if ($user->result()) {
+		return true; //email and password correct
+	} else {
+		return false; //password incorrect
+	}}
+else{
+		return false; //email incorrect
 	}
-
+}
 
 }

@@ -79,6 +79,10 @@
 				<div class="modal-title"><h4>New User</h4></div>
 
 			</div>
+			<div class="alert alert-danger" role="alert" id="email_check">
+				<p id="email_error" >email already exist!</p>
+			</div>
+
 			<form action="<?php base_url();?>users/add_user" method="post">
 				<div class="modal-body">
 					<div class="row">
@@ -103,7 +107,7 @@
 								<label>Email Address</label>
 								<input type="email" class="form-control" name="email" id="email" placeholder="Email"
 									   data-validation="email">
-								<p id="email_error" >email already exist!</p>
+
 							</div>
 						</div>
 					</div>
@@ -111,7 +115,8 @@
 				</div>
 				<div class="modal-footer">
 					<div class="text-right">
-						<button type="reset" class="btn btn-success" data-toggle="modal" data-target="">Reset</button>
+						<button type="reset" class="btn btn-success" data-toggle="modal" data-target=""
+								onclick="$('#email_check').hide();">Reset</button>
 						<button type="submit" class="btn bg-aqua" data-toggle="modal" data-target="">Create</button>
 					</div>
 				</div>
@@ -121,8 +126,8 @@
 </div>
 <script>
 	$(document).ready(function () {
-		$('#email_error').hide();
-		$('#email').change(function () {
+		$('#email_check').hide();
+		$('#email').on('input', function() {
 			var email = $(this).val();
 			$.ajax({
 				type: 'post',
@@ -132,10 +137,14 @@
 				data : {'email': email},
 				success: function (response) {
 					if (response){
-						$('#email_error').show();
+						$('#email_check').show();
+						$(':input[type="submit"]').prop('disabled', true);
+
 					}
 					else {
-						$('#email_error').hide();
+						$('#email_check').hide();
+						$(':input[type="submit"]').prop('disabled', false);
+
 					}
 				}
 			})

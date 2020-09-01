@@ -26,6 +26,8 @@
 		  href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 	<!-- jQuery 3 -->
 	<script src="<?php echo base_url();?>assets/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Full Calendar -->
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/bower_components/fullcalendar/dist/fullcalendar.min.css">
 	<!-- Base URL -->
 	<script>var base_url = '<?php echo site_url() ?>';</script>
 </head>
@@ -111,6 +113,14 @@
 				<li>
 					<a href="">
 						<i class="fa fa-group"></i> &nbsp;&nbsp;<span>Staff</span>
+						<span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo base_url();?>schedules/schedules">
+						<i class="fa fa-calendar-check-o "></i> &nbsp;&nbsp;<span>Channel Schedule</span>
 						<span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                         </span>
